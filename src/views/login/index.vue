@@ -1,5 +1,27 @@
 <template>
-  <div>登录</div>
+  <div class="login">
+    <!-- 卡片组件 -->
+    <el-card class="login-caed">
+      <!-- log图片 -->
+      <div class="title">
+        <img src="../../assets/img/logo_index.png" alt="">
+      </div>
+        <!-- 放置表单 -->
+        <el-form>
+          <!-- el-form 表单 -->
+          <el-form-item>
+            <!-- el-form-item  表单域 -->
+            <el-input placeholder="请输入手机号"></el-input>
+            <!-- el-input input 框 -->
+          </el-form-item>
+          <el-form-item>
+            <!-- el-form-item  表单域 -->
+            <el-input class="input" placeholder="请输入验证码"></el-input>
+            <!-- el-input input 框 -->
+          </el-form-item>
+        </el-form>
+    </el-card>
+  </div>
 </template>
 
 <script>
@@ -8,6 +30,30 @@ export default {
 }
 </script>
 
-<style>
+<style lang='less' scoped>
+.login {
+  background-image: url('../../assets/img/log1.jpg');
+  height: 100vh;
+  /* vh 当前屏幕分为100份 */
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .login-caed {
+    width: 440px;
+    height: 350px;
+    .title {
+      // justify-content: center;
+      text-align: center;
+      margin-bottom: 30px;
+      img {
+        height: 45px;
+      }
 
+    }
+  }
+  .input {
+    width: 60%;
+  }
+}
 </style>
