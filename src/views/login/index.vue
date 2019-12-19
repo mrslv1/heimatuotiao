@@ -10,24 +10,29 @@
         <img src="../../assets/img/logo_index.png" alt="">
       </div>
         <!-- 放置表单 -->
-        <el-form>
+        <el-form ref="myForm" :model="loginForm" :rules="loginRules">
           <!-- el-form 表单 -->
-          <el-form-item>
+          <el-form-item prop="mobile">
             <!-- el-form-item  表单域 -->
-            <el-input placeholder="请输入手机号"></el-input>
+            <el-input v-model="loginForm.mobile" placeholder="请输入手机号"></el-input>
             <!-- el-input input 框 -->
           </el-form-item>
-          <el-form-item>
+          <el-form-item prop="code">
             <!-- el-form-item  表单域 -->
-            <el-input class="input" placeholder="请输入验证码"></el-input>
+            <el-input v-model="loginForm.code" class="input" placeholder="请输入验证码"></el-input>
             <!-- el-input input 框 -->
-
            <el-button plain style="float: right;">获取验证码</el-button>
-          </el-form-item>
-          <el-checkbox v-model="checked">你是否同意我们得霸王条款，麻利得选得了 反正得选</el-checkbox>
 
-        </el-form>
-        <el-row><el-button type="primary" style="width:100% ; margin-top: 40px; " plain>登录</el-button></el-row>
+          </el-form-item>
+          <el-form-item prop="check">
+            <el-checkbox v-model="loginForm.check">你是否同意我们得霸王条款，麻利得选得了 反正得选</el-checkbox>
+
+          </el-form-item>
+
+         <el-form-item>
+           <el-button @click="submitLogin" type="primary" style="width:100% ;" plain>登录</el-button>
+         </el-form-item>
+ </el-form>
     </el-card>
   </div>
 </template>
@@ -36,7 +41,46 @@
 export default {
   data () {
     return {
+      loginForm: {
+        mobile: '', // 手机号
+        code: '', // 验证码
+        check: false // 是否勾选
+      },
+      loginRules: {
+        // 验证规则
+        mobile: [{ required: true, message: '请输入你的手机号' }, {
+          pattern: /^1[3456789]\d{9}$/, message: '请输入合法的手机号'
+        }],
+        code: [{ required: true, message: '请输入您的验证码' }, {
+          pattern: /^\d{6}$/, message: '验证码为6位数字'
+        }],
+        check: [{ validator: function (rule, value, callback) {
+          // 自定义校验规则
+          // rule  规则没啥用
+          // value 要校验的字段的值
+          // callback 是一个回调函数
+          if (value) {
+            // 认为已经勾选
+            callback()
+          } else {
+            // 认为没有勾选
+            callback(new Error('你必须同意我们的霸王条款，要不不带你玩'))
+          }
+        } }]
+      },
+
       checked: true
+    }
+  },
+  methods: {
+    submitLogin () {
+      // 手动校验
+      this.$refs.myForm.validate(function (isOk) {
+        if (isOk) {
+          //  说明校验通过 调接口
+          console.log('校验通过，开始调登录接口')
+        }
+      })
     }
   }
 }
