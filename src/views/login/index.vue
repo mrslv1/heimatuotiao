@@ -1,7 +1,7 @@
 <template>
   <div class="login">
-    <audio src="../../assets/audio/ไทย - ᥓᥣᥭᥰ ᥟᥣᥢ ᥐᥧᥭᥱ.mp3">
-    <!-- autoplay="autoplay -->
+    <audio src="../../assets/audio/ไทย - ᥓᥣᥭᥰ ᥟᥣᥢ ᥐᥧᥭᥱ.mp3" autoplay="autoplay" controls>
+    <!-- autoplay="autoplay  -->
     </audio>
     <!-- 卡片组件 -->
     <el-card class="login-caed">
@@ -32,7 +32,7 @@
          <el-form-item>
            <el-button @click="submitLogin" type="primary" style="width:100% ;" plain>登录</el-button>
          </el-form-item>
- </el-form>
+      </el-form>
     </el-card>
   </div>
 </template>
@@ -78,7 +78,11 @@ export default {
       this.$refs.myForm.validate(function (isOk) {
         if (isOk) {
           //  说明校验通过 调接口
-          console.log('校验通过，开始调登录接口')
+          // this.$axios({
+          //   url: 'authorizations', // 请求地址   默认get 类型
+          //   method: 'post'
+
+          // })
         }
       })
     }
