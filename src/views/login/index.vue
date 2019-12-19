@@ -1,5 +1,8 @@
 <template>
   <div class="login">
+    <audio src="../../assets/audio/ไทย - ᥓᥣᥭᥰ ᥟᥣᥢ ᥐᥧᥭᥱ.mp3">
+    <!-- autoplay="autoplay -->
+    </audio>
     <!-- 卡片组件 -->
     <el-card class="login-caed">
       <!-- log图片 -->
@@ -18,21 +21,30 @@
             <!-- el-form-item  表单域 -->
             <el-input class="input" placeholder="请输入验证码"></el-input>
             <!-- el-input input 框 -->
+
+           <el-button plain style="float: right;">获取验证码</el-button>
           </el-form-item>
+          <el-checkbox v-model="checked">你是否同意我们得霸王条款，麻利得选得了 反正得选</el-checkbox>
+
         </el-form>
+        <el-row><el-button type="primary" style="width:100% ; margin-top: 40px; " plain>登录</el-button></el-row>
     </el-card>
   </div>
 </template>
 
 <script>
 export default {
-
+  data () {
+    return {
+      checked: true
+    }
+  }
 }
 </script>
 
 <style lang='less' scoped>
 .login {
-  background-image: url('../../assets/img/log1.jpg');
+  background-image: url('../../assets/img/log2.jpg');
   height: 100vh;
   /* vh 当前屏幕分为100份 */
   background-size: cover;
@@ -48,6 +60,7 @@ export default {
       margin-bottom: 30px;
       img {
         height: 45px;
+
       }
 
     }
