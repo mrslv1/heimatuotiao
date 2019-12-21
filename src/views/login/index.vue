@@ -1,6 +1,6 @@
 <template>
   <div class="login">
-    <audio src="../../assets/audio/ไทย - ᥓᥣᥭᥰ ᥟᥣᥢ ᥐᥧᥭᥱ.mp3" autoplay="autoplay" controls>
+    <audio src="../../assets/audio/ไทย - ᥓᥣᥭᥰ ᥟᥣᥢ ᥐᥧᥭᥱ.mp3" autoplay>
     <!-- autoplay="autoplay  -->
     </audio>
     <!-- 卡片组件 -->
@@ -75,14 +75,23 @@ export default {
   methods: {
     submitLogin () {
       // 手动校验
-      this.$refs.myForm.validate(function (isOk) {
+      this.$refs.myForm.validate((isOk) => {
         if (isOk) {
           //  说明校验通过 调接口
-          // this.$axios({
-          //   url: 'authorizations', // 请求地址   默认get 类型
-          //   method: 'post'
-
-          // })
+          this.$axios({
+            url: 'authorizations', // 请求地址   默认get 类型
+            method: 'post',
+            data: this.loginForm // body参数
+          }).then(result => {
+            // 正确结果  前端缓存 前端缓存 登录成功返回给我们令牌
+            window.localStorage.setItem('user-token', result.data.data.token)
+            this.$router.push('/home') // 登录成功后到hone页面
+          }).catch(() => {
+            this.$message({
+              type: 'warning',
+              message: '手机号或者验证吗错误'
+            })
+          })
         }
       })
     }
