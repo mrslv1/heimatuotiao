@@ -9,13 +9,13 @@
           <el-row type="flex" justify="end" align="middle">
               <img :src="userlnfo.photo ? userlnfo.photo : '../../assets/img/2020.png'" alt="">
               <!-- 下拉菜单 -->
-              <el-dropdown>
+              <el-dropdown @command="clickMenu" >
                   <!-- 匿名插槽  下拉菜单的内容 -->
                 <span>{{userlnfo.mame}}</span>
                 <el-dropdown-menu slot="dropdown">
-                    <el-dropdown-item>个人信息</el-dropdown-item>
-                    <el-dropdown-item>git管理</el-dropdown-item>
-                    <el-dropdown-item>退出</el-dropdown-item>
+                    <el-dropdown-item command="info">个人信息</el-dropdown-item>
+                    <el-dropdown-item command="git">git管理</el-dropdown-item>
+                    <el-dropdown-item command="info">退出</el-dropdown-item>
 
                 </el-dropdown-menu>
               </el-dropdown>
@@ -45,6 +45,20 @@ export default {
     }).then(result => {
       this.userlnfo = result.data.data
     })
+  },
+  command: {
+    //   点击菜单项时触发
+    clickMenu (command) {
+      if (command === 'inf') {
+
+      } else if (command === 'git') {
+        window.location.href = 'https://github.com/mrslv1/heimatuotiao'
+      } else {
+        //   退出
+        window.localStorage.removeItem('user-token') // 删除令牌
+        this.$router.push('/login')
+      }
+    }
   }
 }
 </script>
