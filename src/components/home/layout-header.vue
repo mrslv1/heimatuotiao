@@ -15,7 +15,7 @@
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="info">个人信息</el-dropdown-item>
                     <el-dropdown-item command="git">git管理</el-dropdown-item>
-                    <el-dropdown-item command="info">退出</el-dropdown-item>
+                    <el-dropdown-item command="lgout">退出</el-dropdown-item>
 
                 </el-dropdown-menu>
               </el-dropdown>
@@ -35,18 +35,14 @@ export default {
     }
   },
   created () {
-    let token = localStorage.getItem('user-token') // 获取用户令牌
     this.$axios({
-      url: '/user/profile',
-      headers: {
-        // header 的参数
-        Authorization: `Bearer ${token} `
-      }
+      url: '/user/profile'
+
     }).then(result => {
       this.userlnfo = result.data.data
     })
   },
-  command: {
+  methods: {
     //   点击菜单项时触发
     clickMenu (command) {
       if (command === 'inf') {
