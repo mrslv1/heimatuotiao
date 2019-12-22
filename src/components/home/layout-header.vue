@@ -11,7 +11,7 @@
               <!-- 下拉菜单 -->
               <el-dropdown @command="clickMenu" >
                   <!-- 匿名插槽  下拉菜单的内容 -->
-                <span>{{userlnfo.mame}}</span>
+                <span>{{userlnfo.name}}</span>
                 <el-dropdown-menu slot="dropdown">
                     <el-dropdown-item command="info">个人信息</el-dropdown-item>
                     <el-dropdown-item command="git">git管理</el-dropdown-item>
