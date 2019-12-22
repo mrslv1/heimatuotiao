@@ -1,7 +1,7 @@
 <template>
 <!-- 二级路由 -->
-<div class="app">
-    <img src="../../assets/img/yejngjpg.jpg" alt="">
+<div>
+    <!-- <img src="../../assets/img/yejngjpg.jpg" alt=""> -->
 </div>
 </template>
 
