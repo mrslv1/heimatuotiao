@@ -12,4 +12,11 @@ axios.interceptors.request.use(function (config) {
   // 执行请求错误
 
 })
+// 响应拦截器
+axios.interceptors.respo.use(function (response) {
+  // 成功  200  201  204
+  return response.data ? response.data : {}
+}, function () {
+  // 失败
+})
 export default axios

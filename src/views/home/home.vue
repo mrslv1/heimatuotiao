@@ -1,6 +1,8 @@
 <template>
 <!-- 二级路由 -->
-<div></div>
+<div class="app">
+    <img src="../../assets/img/yejngjpg.jpg" alt="">
+</div>
 </template>
 
 <script>
@@ -9,6 +11,6 @@ export default {
 }
 </script>
 
-<style>
+<style lang='less' scoped>
 
 </style>

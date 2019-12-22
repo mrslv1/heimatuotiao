@@ -39,7 +39,7 @@ export default {
       url: '/user/profile'
 
     }).then(result => {
-      this.userlnfo = result.data.data
+      this.userlnfo = result.data
     })
   },
   methods: {

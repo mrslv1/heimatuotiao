@@ -84,7 +84,7 @@ export default {
             data: this.loginForm // body参数
           }).then(result => {
             // 正确结果  前端缓存 前端缓存 登录成功返回给我们令牌
-            window.localStorage.setItem('user-token', result.data.data.token)
+            window.localStorage.setItem('user-token', result.data.token)
             this.$router.push('/home') // 登录成功后到hone页面
           }).catch(() => {
             this.$message({
