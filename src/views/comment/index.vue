@@ -17,9 +17,9 @@
          <el-table-column label="操作">
              <template slot-scope="obj">
                 <!-- 作用域插槽 -->
-                  <el-button size="small" type="tetx">修改</el-button>
+                  <el-button  type="text">修改</el-button>
              <!-- 根据状态进行判断是否关闭 -->
-                  <el-button size="small" type="tetx">{{ obj.row.comment_status ? '关闭' : '打开' }}评论</el-button>
+                  <el-button @click="openOrCloseState(obj.row)" type="text"> {{ obj.row.comment_status ? '关闭' : '打开' }}评论</el-button>
              </template>
 
          </el-table-column>
@@ -43,16 +43,43 @@ export default {
       }).then(result => {
         this.list = result.data.results
       })
-    }
-  },
-  // 定义一个格式化的函数
-  formatterBoolean (row, column, cellValue, index) {
+    },
+    formatterBoolean (row, column, cellValue, index) {
     // row  当前数据
     // column  当前列信息
     // cellvalue  当前的单元格的值
     // index  索引
-    return cellValue ? '正常' : '关闭'
+      return cellValue ? '正常' : '关闭'
+    // if (cellValue) {
+    //   return '正常'
+    // } else {
+    //   return '关闭'
+    // }
+    },
+    // 打开或者关闭评论
+    openOrCloseState (row) {
+    // 直接调用接口
+      let mess = row.comment_status ? '关闭' : '打开'
+      this.$confirm(`确定${mess}评论吗？`, '提示', {
+      }).then(() => {
+        // 调接口
+        this.$axios({
+          method: 'put',
+          url: '/commebts/status',
+          params: { articles_id: row.id },
+          // 取反：打开状态就关闭  关闭打开
+          data: { allow_comment: !row.comment_status }
+        }).then(result => {
+          // 执行成功
+          this.getComment() // 重新拉去数据
+        })
+      })
+    }
   },
+  // 定义一个格式化的函数
+
+  // 打开评论或者关闭
+
   created () {
     this.getComment() // 获取数据
   }
