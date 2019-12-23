@@ -66,7 +66,7 @@ export default {
         this.$axios({
           method: 'put',
           url: '/commebts/status',
-          params: { articles_id: row.id },
+          params: { articles_id: row.id.toString() },
           // 取反：打开状态就关闭  关闭打开
           data: { allow_comment: !row.comment_status }
         }).then(result => {
