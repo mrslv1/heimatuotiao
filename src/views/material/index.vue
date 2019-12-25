@@ -7,6 +7,11 @@
           素材管理
       </template>
       </bread-crumb>
+      <el-row type="flpe" justify="end">
+        <el-upload action="" :http-request="uploadilmg" :show-file-list="false">
+          <el-button size="small" type="primary">上传图片</el-button>
+        </el-upload>
+      </el-row>
       <!-- 标签页 -->
       <el-tabs v-model="activeName" @click="changeTab">
           <!-- 标签 -->
@@ -17,8 +22,9 @@
                 <el-card class="img-card" v-for="item in list" :key="item.id">
                     <img :src="item.url" alt="">
                     <el-row class="operate" type="flex" align="middle" justify="space-around">
-                        <i class="el-icon-star-on"></i>
-                        <i class="el-icon-delete-solid"></i>
+                        <!-- 根据当前是否收藏的状态来决定  是否给字体颜色 -->
+                        <i @click="collectOrCancel(item)" :style="{color:item.is_collected ?'red' : '#000'}" class="el-icon-star-on"></i>
+                        <i @click="delMaterial(item.id)" class="el-icon-delete-solid"></i>
                     </el-row>
                 </el-card>
             </div>
@@ -62,6 +68,43 @@ export default {
   },
 
   methods: {
+    // 删除图片素材
+    delMaterial (id) {
+      this.$confirm('你真的要删除吗').then(() => {
+        this.$axios({
+          method: 'delete',
+          url: `/user/images/${id}`
+        }).then(() => {
+          this.getMaterial() // 重新拉取数据
+        })
+      })
+    },
+    // 取消或收藏
+    collectOrCancel (item) {
+      this.$axios({
+        method: 'put',
+        url: `/user/images/${item.id}`,
+        data: {
+          collect: !item.is_collected // 取反  点收藏就是取消
+        }
+      }).then(result => {
+        this.getMaterial() // 重新拉取数据
+      })
+    },
+    // 上传图片的
+    uploadilmg (params) {
+      this.logding = true // 弹层
+      let data = new FormData()
+      data.append('image', params.file) // 文件放到参数中
+      this.$axios({
+        method: 'post',
+        url: '/user/images',
+        data
+      }).then(result => {
+        this.logding = false // 关闭弹层
+        this.getMaterial() // 直接调用拉取数据的方法
+      })
+    },
     //   改变页码
     changePage (newPage) {
       this.page.currentPage = newPage
@@ -115,6 +158,9 @@ export default {
             font-size: 22px;
             height: 60px;
             background-color: #f4f5f6;
+            i{
+              cursor: pointer;
+            }
         }
     }
 }
