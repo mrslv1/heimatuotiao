@@ -45,8 +45,8 @@ export default {
   methods: {
     //   点击菜单项时触发
     clickMenu (command) {
-      if (command === 'inf') {
-
+      if (command === 'info') {
+        this.$router.push('/home/account')
       } else if (command === 'git') {
         window.location.href = 'https://github.com/mrslv1/heimatuotiao'
       } else {
