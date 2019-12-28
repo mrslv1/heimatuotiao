@@ -7,7 +7,7 @@
       <el-form style="padding-left:px">
           <el-form-item label="文章状态:">
               <!-- 单选组 -->
-              <el-radio-group v-model="searchForm.status">
+              <el-radio-group v-model="searchForm.status" @change="changeCondition">
                   <el-radio :label="5">全部</el-radio>
                   <el-radio :label="0">草稿</el-radio>
                   <el-radio :label="1">待审核</el-radio>
@@ -16,13 +16,13 @@
               </el-radio-group>
           </el-form-item>
           <el-form-item label="频道列表:">
-              <el-select placeholder="请选择频道" v-model="searchForm.channel_id">
+              <el-select @change="changeCondition" placeholder="请选择频道" v-model="searchForm.channel_id">
                   <el-option v-for="item in channels" :key="item.id" :label="item.name" :value="item.id"></el-option>
               </el-select>
           </el-form-item>
           <el-form-item label="时间选择:">
               <!-- 日期选择器 -->
-              <el-date-picker v-model="searchForm.dateRange" type="daterange"></el-date-picker>
+              <el-date-picker @change="changeCondition" value-format="yyyy-MM-dd" v-model="searchForm.dateRange" type="daterange"></el-date-picker>
           </el-form-item>
       </el-form>
       <el-row class="total" type="flex" align="middle">
@@ -92,18 +92,30 @@ export default {
     }
   },
   methods: {
+    // 改变条件
+    changeCondition () {
+      // alert(this.searchForm.status)
+      let params = {
+        status: this.searchForm.status === 5 ? null : this.searchForm.status,
+        channel_id: this.searchForm.channel_id,
+        begin_pubdate: this.searchForm.dateRange.length ? this.searchForm.dateRange[0] : null, // 开始时间
+        end_pubdate: this.searchForm.dateRange.length > 1 ? this.searchForm.dateRange[1] : null // 结束时间
+      }
+      this.getArticles(params)
+    },
     //   获取所有的频道
     getChannels () {
       this.$axios({
-        url: '/articles'
+        url: '/channels'
       }).then(result => {
         this.channels = result.data.channels
       })
     },
     // 获取文章列表数据
-    getArticles () {
+    getArticles (params) {
       this.$axios({
-        url: '/articles'
+        url: '/articles',
+        params
       }).then(result => {
         this.list = result.data.results // 获取文章列表
       })
