@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -90,6 +91,8 @@ export default {
             type: 'success',
             message: '保存用户信息成功'
           })
+          // 保存成功后 通知头部更新
+          eventBus.$emit('updateUserlnfo')
         })
       })
     }

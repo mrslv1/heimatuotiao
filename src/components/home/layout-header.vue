@@ -26,7 +26,7 @@
 </template>
 
 <script>
-
+import eventBus from '../../utils/eventBus'
 export default {
   data () {
     return {
@@ -35,14 +35,22 @@ export default {
     }
   },
   created () {
-    this.$axios({
-      url: '/user/profile'
-
-    }).then(result => {
-      this.userlnfo = result.data
+    this.getUserlnfo()
+    // 开启监听
+    eventBus.$on('updateUserInfo', () => {
+      // 别人更新  自己也也要更新
+      this.getUserlnfo()
     })
   },
   methods: {
+    getUserlnfo () {
+      this.$axios({
+        url: '/user/profile'
+      }).then(result => {
+        this.userlnfo = result.data
+      })
+    },
+
     //   点击菜单项时触发
     clickMenu (command) {
       if (command === 'info') {
