@@ -40,8 +40,9 @@
           </div>
           <!-- 右侧 -->
           <div class="right">
-              <span class="el-icon-edit">修改</span>
-              <span class="el-icon-delete">删除</span>
+              <span><i class="el-icon-edit">修改</i></span>
+              <!-- 注册删除按钮事件 -->
+              <span @click="delMaterial(item.id)"><i class="el-icon-delete">删除</i></span>
           </div>
       </div>
   </el-card>
@@ -92,6 +93,22 @@ export default {
     }
   },
   methods: {
+    // 删除内容
+    delMaterial (id) {
+      this.$confirm('是否要删除该文章').then(() => {
+        // 删除的接口
+        this.$axios({
+          method: 'delete',
+          url: `/articles/${id.toString()}`
+        }).then(result => {
+          this.$message({
+            type: 'success',
+            message: '删除成功'
+          })
+          // 删除完成后重新拉取数据
+        })
+      })
+    },
     // 改变条件
     changeCondition () {
       // alert(this.searchForm.status)
